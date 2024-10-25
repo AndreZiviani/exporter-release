@@ -153,8 +153,17 @@ func checkReleases(reposAndCharts *ReposAndCharts) {
 }
 
 func main() {
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		if len(os.Args) != 1 {
+			configPath = os.Args[1]
+		} else {
+			configPath = "config.yaml"
+		}
+	}
+
 	// Load server configuration from config.yaml
-	config, err := loadConfig("config.yaml")
+	config, err := loadConfig(configPath)
 	if err != nil {
 		log.Fatalf("Error loading configuration file: %v", err)
 	}
